@@ -3,86 +3,86 @@ console.log('in client.js');
 $(onReady);
 
 function onReady() {
-    console.log('in onReady function');
-    // set up click listeners
-    setupClickListeners();
+  console.log('in onReady function');
+  // set up click listeners
+  setupClickListeners();
 
-    // load existing koalas on page load
-    getKoalas();
+  // load existing koalas on page load
+  getKoalas();
 
 }; // end doc ready
 
 function setupClickListeners() {
-    // add click listeners to add, delete, ready to transfer, edit buttons
-    $('#addButton').on('click', addKoala);
-    $('#viewKoalas').on('click', '.delete-btn', deleteKoala);
-    $('#viewKoalas').on('click', '.ready-btn', readyKoala);
-    $('#viewKoalas').on('click', '.edit-btn', editKoala);
+  // add click listeners to add, delete, ready to transfer, edit buttons
+  $('#addButton').on('click', addKoala);
+  $('#viewKoalas').on('click', '.delete-btn', deleteKoala);
+  $('#viewKoalas').on('click', '.ready-btn', readyKoala);
+  $('#viewKoalas').on('click', '.edit-btn', editKoala);
 }
 
 function getKoalas() {
-    console.log('in getKoalas');
+  console.log('in getKoalas');
 
-    // ajax call to server to get koalas
-    $.ajax({
-        type: 'GET',
-        url: `/koalas`
-    }).then(function (response) {
-        // on successful get, render table
-        renderDisplay(response);
-    }).catch(function (error) {
-        console.log('could not get koalas ', error);
-    });
+  // ajax call to server to get koalas
+  $.ajax({
+    type: 'GET',
+    url: `/koalas`
+  }).then(function (response) {
+    // on successful get, render table
+    renderDisplay(response);
+  }).catch(function (error) {
+    console.log('could not get koalas ', error);
+  });
 }
 
 function addKoala() {
-    console.log('in addKoala');
+  console.log('in addKoala');
 
-    // create new koala objct
-    const newKoala = {
-        name: $('#nameIn').val(),
-        age: $('#ageIn').val(),
-        gender: $('#genderIn').val(),
-        ready_to_transfer: $('#readyForTransferIn').val(),
-        notes: $('#notesIn').val()
-    }
+  // create new koala objct
+  const newKoala = {
+    name: $('#nameIn').val(),
+    age: $('#ageIn').val(),
+    gender: $('#genderIn').val(),
+    ready_to_transfer: $('#readyForTransferIn').val(),
+    notes: $('#notesIn').val()
+  }
 
-    // empty inputs
-    $('#nameIn').val('');
-    $('#ageIn').val('');
-    $('#genderIn').val('');
-    $('#readyForTransferIn').val('');
-    $('#notesIn').val('');
+  // empty inputs
+  $('#nameIn').val('');
+  $('#ageIn').val('');
+  $('#genderIn').val('');
+  $('#readyForTransferIn').val('');
+  $('#notesIn').val('');
 
-    // ajax call to server to post koalas
-    $.ajax({
-      type: 'POST',
-      url: '/koalas',
-      data: newKoala
-    }).then((res) => {
-      console.log('new koala added!');
-      getKoalas();
-    }).catch((err) => {
-      console.log('could not add: ', err);
-    });
+  // ajax call to server to post koalas
+  $.ajax({
+    type: 'POST',
+    url: '/koalas',
+    data: newKoala
+  }).then((res) => {
+    console.log('new koala added!');
+    getKoalas();
+  }).catch((err) => {
+    console.log('could not add: ', err);
+  });
 }
 
 function readyKoala() {
-    // updates the 'ready to transfer' attribute
+  // updates the 'ready to transfer' attribute
 
-    const id = $(this).data('id');
-    $.ajax({
-        type: 'PUT',
-        url: `/koalas/${id}`,
-        data: { status: true }
-    }).then((res) => {
-        console.log('successful update');
+  const id = $(this).data('id');
+  $.ajax({
+    type: 'PUT',
+    url: `/koalas/${id}`,
+    data: { status: true }
+  }).then((res) => {
+    console.log('successful update');
 
-        // update the koala table
-        getKoalas();
-      }).catch((err) => {
-        console.log('could not update ', err);
-      });
+    // update the koala table
+    getKoalas();
+  }).catch((err) => {
+    console.log('could not update ', err);
+  });
 }
 
 function deleteKoala() {
@@ -116,15 +116,28 @@ function deleteKoala() {
     });
 }
 
+function filterResults() {
+  const searchTerm = $('#live-search').val().toLowerCase();
+  // get all results, then filter by search term
+
+  $.ajax({
+    type: 'GET',
+    url: `/koalas/${searchTerm}`
+  }).then((res) => {
+    renderDisplay(res);
+  }).catch((err) => {
+    console.log('could not filter')
+  })
+}
 
 function renderDisplay(array) {
-    // empty the koala table
-    $('#viewKoalas').empty();
-    console.log('all koalas: ', array);
+  // empty the koala table
+  $('#viewKoalas').empty();
+  console.log('all koalas: ', array);
 
-    // update koala table
-    for (let koala of array) {
-        $('#viewKoalas').append(`
+  // update koala table
+  for (let koala of array) {
+    $('#viewKoalas').append(`
             <tr>
                 <td class='koala-attribute' data-id='${koala.id}'>${koala.name}</td>
                 <td class='koala-attribute' data-id='${koala.id}'>${koala.age}</td>
@@ -136,7 +149,7 @@ function renderDisplay(array) {
                 <td><button class= "ready-btn" data-id='${koala.id}'>${koala.ready_to_transfer ? 'mark unready' : 'mark ready'}</button></td>
             </tr>
         `);
-    }
+  }
 }
 
 
@@ -153,18 +166,11 @@ function editKoala() {
   // change text of edit button to submit
   $(this).html('submit changes')
   // toggle click listeners on button
-  const rowBoxes = $(this).parent().parent().children()
-  console.log(rowBoxes, typeof rowBoxes)
-  for (let box of rowBoxes) {
-    console.log(box);
-    if (box.contains('koala-attribute')) {
-      box.on('click', changeToInput(box))
-      box.off('click', editKoala)
-    }
-  }
+  const rowBoxes = $(this).parent().parent().find('.koala-attribute');
+  console.log(rowBoxes);
+  rowBoxes
 
-  // previous boxes get a click listener that changes them into a text input with placeholder of what they were
-
+    ;
 }
 
 function changeToInput(element) {

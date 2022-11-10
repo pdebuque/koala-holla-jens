@@ -21,13 +21,28 @@ router.get('/', (req, res) => {
         })
 })
 
+// filter get
+
+router.get('/:searchTerm', (req, res) => {
+    console.log('in filter')
+    const queryText = `SELECT * FROM koalas_list WHERE name ILIKE $1 OR notes ILIKE $1`
+    pool.query(queryText, [`%${req.params.searchTerm}%`])
+        .then((result) => {
+            res.send(result.rows)
+        })
+        .catch((err) => {
+            console.log('problem filtering', err)
+        })
+})
+
+
 // POST
 router.post('/', (req, res) => {
     console.log('in POST request at /koalas');
     const newKoala = req.body;
     const queryText = `INSERT INTO koalas_list
                         (name,age,gender,ready_to_transfer,notes)
-                        VALUES ('$1', $2, '$3', '$4', '$5')
+                        VALUES ($1, $2, $3, $4, $5)
     `
     pool.query(queryText, [newKoala.name, newKoala.age, newKoala.gender, newKoala.ready_to_transfer, newKoala.notes])
         .then(() => {
