@@ -1,9 +1,9 @@
 
-[] set up database: id, name, gender, age, ready_to_transfer, notes
+[x] set up database: id, name, gender, age, ready_to_transfer, notes
 [] add existing inventory
 
 html
-[] create form
+[x] create form
 
 
 js
