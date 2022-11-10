@@ -27,10 +27,10 @@ router.post('/', (req, res) => {
     console.log('in POST request at /koalas');
     const newKoala = req.body;
     const queryText = `INSERT INTO koalas_list
-                        (name,age,gender,ready_for_transfer,notes)
-                        VALUES ('$1', $2, '$3', $4, '$5')
+                        (name,age,gender,ready_to_transfer,notes)
+                        VALUES ('$1', $2, '$3', '$4', '$5')
     `
-    pool.query(queryText, [newKoala.name, newKoala.age, newKoala.gender, newKoala.ready_for_transfer, newKoala.notes])
+    pool.query(queryText, [newKoala.name, newKoala.age, newKoala.gender, newKoala.ready_to_transfer, newKoala.notes])
         .then(() => {
             console.log('POST successful');
             res.sendStatus(201);
@@ -42,6 +42,20 @@ router.post('/', (req, res) => {
 
 // PUT
 
+// put updates the ready for transfer status
+
+router.put('/:id', (req, res) => {
+    const queryText = `UPDATE koalas_list SET ready_to_transfer='TRUE' WHERE id=$1`
+    pool.query(queryText, [req.params.id])
+        .then(() => {
+            console.log('changed status success');
+            res.sendStatus(202);
+        })
+        .catch((err) => {
+            console.log('could not update status');
+            res.sendStatus(500);
+        })
+})
 
 // DELETE
 
