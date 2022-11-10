@@ -4,7 +4,7 @@ CREATE TABLE koalas_list (
     "gender" char NOT NULL,
     "age" integer NOT NULL,
     "ready_to_transfer" boolean NOT NULL,
-    "notes" varchar(255),
+    "notes" varchar(255)
 );
 
 INSERT INTO koalas_list ("name", "gender", "age", "ready_to_transfer", "notes")
