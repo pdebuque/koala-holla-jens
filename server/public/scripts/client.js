@@ -78,7 +78,16 @@ function readyKoala() {
 
 // delete koalas
 function deleteKoala() {
-
+  const id = $(this).data('id');
+  $.ajax({
+    type: 'DELETE',
+    url: `/koalas/${id}`
+  }).then(() => {
+    console.log('successful delete')
+    getKoalas();
+  }).catch((err) => {
+    console.log('could not delete', err)
+  })
 }
 
 
