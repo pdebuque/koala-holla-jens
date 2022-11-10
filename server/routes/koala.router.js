@@ -7,10 +7,9 @@ const router = express.Router();
 const pool = require('../modules/pool')
 
 // GET
-
 router.get('/', (req, res) => {
     console.log('in router get', req)
-    let queryText = 'SELECT * FROM "koalas_list";';  // is this right?
+    let queryText = 'SELECT * FROM "koalas_list";';
     pool.query(queryText)
         .then((result) => {
             console.log('its working!', result.rows)
@@ -43,7 +42,7 @@ router.post('/', (req, res) => {
     const newKoala = req.body;
     const queryText = `INSERT INTO koalas_list
                         (name,age,gender,ready_to_transfer,notes)
-                        VALUES ('$1', $2, '$3', '$4', '$5')
+                        VALUES ($1, $2, $3, $4, $5)
     `
     pool.query(queryText, [newKoala.name, newKoala.age, newKoala.gender, newKoala.ready_to_transfer, newKoala.notes])
         .then(() => {
@@ -56,9 +55,8 @@ router.post('/', (req, res) => {
 })
 
 // PUT
-
-// update the ready for transfer status
 router.put('/:id', (req, res) => {
+    // update the ready for transfer status
     const queryText = `UPDATE koalas_list SET ready_to_transfer = NOT ready_to_transfer WHERE id=$1`
     pool.query(queryText, [req.params.id])
         .then(() => {
@@ -72,9 +70,9 @@ router.put('/:id', (req, res) => {
 })
 
 // edit information for existing koalas
+// (work in progress)
 
 // DELETE
-
 router.delete('/:id', (req, res) => {
     const queryText = `DELETE FROM koalas_list WHERE id = $1`
     pool.query(queryText, [req.params.id])
