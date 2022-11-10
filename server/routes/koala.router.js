@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
     const newKoala = req.body;
     const queryText = `INSERT INTO koalas_list
                         (name,age,gender,ready_to_transfer,notes)
-                        VALUES ('$1', $2, '$3', '$4', '$5')
+                        VALUES ($1, $2, $3, $4, $5)
     `
     pool.query(queryText, [newKoala.name, newKoala.age, newKoala.gender, newKoala.ready_to_transfer, newKoala.notes])
         .then(() => {
