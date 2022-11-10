@@ -78,16 +78,27 @@ function readyKoala() {
 
 // delete koalas
 function deleteKoala() {
-  const id = $(this).data('id');
-  $.ajax({
-    type: 'DELETE',
-    url: `/koalas/${id}`
-  }).then(() => {
-    console.log('successful delete')
-    getKoalas();
-  }).catch((err) => {
-    console.log('could not delete', err)
-  })
+  Swal.fire({
+    title: 'Are you sure you want to delete this koala?',
+    showCancelButton: true,
+    confirmButtonText: 'Delete',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const id = $(this).data('id');
+      $.ajax({
+        type: 'DELETE',
+        url: `/koalas/${id}`
+      }).then(() => {
+        console.log('successful delete');
+        getKoalas();
+      }).catch((err) => {
+        console.log('could not delete', err);
+      });
+      Swal.fire('The koala was deleted.', '', 'success');
+    } else if (result.isDenied) {
+      console.log('delete canceled');
+    }
+  });
 }
 
 
