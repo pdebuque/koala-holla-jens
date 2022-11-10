@@ -12,6 +12,9 @@ function onReady() {
 
 function setupClickListeners() {
   $('#addButton').on('click', addKoala);
+  $('#viewKoalas').on('click', '.delete-btn', deleteKoala);
+  $('#viewKoalas').on('click', '.ready-btn', readyKoala);
+
 }
 
 function getKoalas() {
@@ -34,7 +37,7 @@ function addKoala() {
     name: $('#nameIn').val(),
     age: $('#ageIn').val(),
     gender: $('#genderIn').val(),
-    ready_for_transfer: $('#readyForTransferIn').val(),
+    ready_to_transfer: $('#readyForTransferIn').val(),
     notes: $('#notesIn').val()
   }
   // create new koala
@@ -58,18 +61,42 @@ function addKoala() {
   });
 }
 
+// ready koalas
+function readyKoala() {
+  const id = $(this).data('id')
+  $.ajax({
+    type: 'PUT',
+    url: `/koalas/${id}`,
+    data: { status: true }
+  }).then((res) => {
+    console.log('successful update');
+    getKoalas();
+  }).catch((err) => {
+    console.log('could not update ', err)
+  })
+}
+
+// delete koalas
+function deleteKoala() {
+
+}
+
+
 function renderDisplay(array) {
   $('#viewKoalas').empty();
+  console.log('all koalas: ', array)
   for (let koala of array) {
     $('#viewKoalas').append(`
       <tr>
         <td>${koala.name}</td>
         <td>${koala.age}</td>
         <td>${koala.gender}</td>
-        <td>${koala.ready_for_transfer}</td>
+        <td>${koala.ready_to_transfer}</td>
         <td>${koala.notes}</td>
         <td><button class= "delete-btn" data-id='${koala.id}'>x</button></td>
+        <td><button class= "ready-btn" data-id='${koala.id}'>mark ready</button></td>
       </tr>
     `)
   }
 }
+
