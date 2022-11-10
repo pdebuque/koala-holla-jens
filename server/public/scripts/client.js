@@ -15,7 +15,7 @@ function setupClickListeners() {
   $('#viewKoalas').on('click', '.delete-btn', deleteKoala);
   $('#viewKoalas').on('click', '.ready-btn', readyKoala);
   $('#viewKoalas').on('click', '.edit-btn', editKoala);
-
+  $('#live-search').on('keyup', filterResults);
 
 }
 
@@ -103,10 +103,23 @@ function deleteKoala() {
   });
 }
 
+function filterResults() {
+  const searchTerm = $('#live-search').val().toLowerCase();
+  // get all results, then filter by search term
+
+  $.ajax({
+    type: 'GET',
+    url: `/koalas/${searchTerm}`
+  }).then((res) => {
+    renderDisplay(res);
+  }).catch((err) => {
+    console.log('could not filter')
+  })
+}
 
 function renderDisplay(array) {
   $('#viewKoalas').empty();
-  console.log('all koalas: ', array)
+  // console.log('koalas to render: ', array)
   for (let koala of array) {
     $('#viewKoalas').append(`
       <tr>
@@ -137,18 +150,11 @@ function editKoala() {
   // change text of edit button to submit
   $(this).html('submit changes')
   // toggle click listeners on button
-  const rowBoxes = $(this).parent().parent().children()
-  console.log(rowBoxes, typeof rowBoxes)
-  for (let box of rowBoxes) {
-    console.log(box);
-    if (box.contains('koala-attribute')) {
-      box.on('click', changeToInput(box))
-      box.off('click', editKoala)
-    }
-  }
+  const rowBoxes = $(this).parent().parent().find('.koala-attribute');
+  console.log(rowBoxes);
+  rowBoxes
 
-  // previous boxes get a click listener that changes them into a text input with placeholder of what they were
-
+    ;
 }
 
 function changeToInput(element) {
