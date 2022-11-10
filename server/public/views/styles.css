@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0px;
+}
+
+h3 {
+    font-weight: normal;
+}
+
+header {
+    background-color: dodgerblue;
+    padding: 20px;
+
+}
+
+header img {
+    float: left;
+    padding-right: 10px;
+}
+
+input {
+    border: 1px solid lightgray;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table,
+th,
+td {
+    border: 1px solid lightgray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+
+.icon {
+    width: 150px;
+}
+
+.koalas {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 0px;
+}
