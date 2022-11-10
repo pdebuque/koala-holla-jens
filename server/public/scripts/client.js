@@ -14,6 +14,8 @@ function setupClickListeners() {
   $('#addButton').on('click', addKoala);
   $('#viewKoalas').on('click', '.delete-btn', deleteKoala);
   $('#viewKoalas').on('click', '.ready-btn', readyKoala);
+  $('#viewKoalas').on('click', '.edit-btn', editKoala);
+
 
 }
 
@@ -108,15 +110,53 @@ function renderDisplay(array) {
   for (let koala of array) {
     $('#viewKoalas').append(`
       <tr>
-        <td>${koala.name}</td>
-        <td>${koala.age}</td>
-        <td>${koala.gender}</td>
-        <td>${koala.ready_to_transfer}</td>
-        <td>${koala.notes}</td>
+        <td class='koala-attribute' data-id='${koala.id}'>${koala.name}</td>
+        <td class='koala-attribute' data-id='${koala.id}'>${koala.age}</td>
+        <td class='koala-attribute' data-id='${koala.id}'>${koala.gender}</td>
+        <td class='koala-attribute' data-id='${koala.id}'>${koala.ready_to_transfer}</td>
+        <td class='koala-attribute' data-id='${koala.id}'>${koala.notes}</td>
+        <td><button class= "edit-btn" data-id='${koala.id}'>edit</button></td>
         <td><button class= "delete-btn" data-id='${koala.id}'>x</button></td>
-        <td><button class= "ready-btn" data-id='${koala.id}'>mark ready</button></td>
+        <td><button class= "ready-btn" data-id='${koala.id}'>${koala.ready_to_transfer ? 'mark unready' : 'mark ready'}</button></td>
       </tr>
     `)
   }
 }
 
+
+
+
+// this is non-functional and unfinished
+// edit Koala should select all corresponding attribute boxes and toggle click listeners
+// change to input changes the box into an input
+// submit edit sends data to server in PUT
+
+function editKoala() {
+  // use THIS to get id
+  const id = $(this).data('id')
+  // change text of edit button to submit
+  $(this).html('submit changes')
+  // toggle click listeners on button
+  const rowBoxes = $(this).parent().parent().children()
+  console.log(rowBoxes, typeof rowBoxes)
+  for (let box of rowBoxes) {
+    console.log(box);
+    if (box.contains('koala-attribute')) {
+      box.on('click', changeToInput(box))
+      box.off('click', editKoala)
+    }
+  }
+
+  // previous boxes get a click listener that changes them into a text input with placeholder of what they were
+
+}
+
+function changeToInput(element) {
+  const prevText = $(element).text();
+  $(this).html(`<input type="text" class = "edit-input" placeholder = ${prevText}`);
+  submitEdits()
+}
+
+function submitEdits() {
+  // PUT request
+}

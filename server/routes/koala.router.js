@@ -42,10 +42,9 @@ router.post('/', (req, res) => {
 
 // PUT
 
-// put updates the ready for transfer status
-
+// update the ready for transfer status
 router.put('/:id', (req, res) => {
-    const queryText = `UPDATE koalas_list SET ready_to_transfer='TRUE' WHERE id=$1`
+    const queryText = `UPDATE koalas_list SET ready_to_transfer = NOT ready_to_transfer WHERE id=$1`
     pool.query(queryText, [req.params.id])
         .then(() => {
             console.log('changed status success');
@@ -56,6 +55,8 @@ router.put('/:id', (req, res) => {
             res.sendStatus(500);
         })
 })
+
+// edit information for existing koalas
 
 // DELETE
 
