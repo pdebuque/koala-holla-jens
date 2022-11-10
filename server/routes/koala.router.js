@@ -1,6 +1,6 @@
-const { Router } = require('express');
+// const { Router } = require('express');
 const express = require('express');
-const koalaRouter = express.Router();
+const router = express.Router();
 
 // DB CONNECTION
 
@@ -23,7 +23,6 @@ router.get('/', (req, res) => {
 })
 
 // POST
-
 router.post('/', (req, res) => {
     console.log('in POST request at /koalas');
     const newKoala = req.body;
@@ -46,4 +45,4 @@ router.post('/', (req, res) => {
 
 // DELETE
 
-module.exports = koalaRouter;
+module.exports = router;
