@@ -117,7 +117,7 @@ function renderDisplay(array) {
         <td class='koala-attribute' data-id='${koala.id}'>${koala.notes}</td>
         <td><button class= "edit-btn" data-id='${koala.id}'>edit</button></td>
         <td><button class= "delete-btn" data-id='${koala.id}'>x</button></td>
-        <td><button class= "ready-btn" data-id='${koala.id}'>mark ready</button></td>
+        <td><button class= "ready-btn" data-id='${koala.id}'>${koala.ready_to_transfer ? 'mark unready' : 'mark ready'}</button></td>
       </tr>
     `)
   }
@@ -126,6 +126,10 @@ function renderDisplay(array) {
 
 
 
+// this is non-functional and unfinished
+// edit Koala should select all corresponding attribute boxes and toggle click listeners
+// change to input changes the box into an input
+// submit edit sends data to server in PUT
 
 function editKoala() {
   // use THIS to get id
@@ -139,6 +143,7 @@ function editKoala() {
     console.log(box);
     if (box.contains('koala-attribute')) {
       box.on('click', changeToInput(box))
+      box.off('click', editKoala)
     }
   }
 
@@ -149,6 +154,7 @@ function editKoala() {
 function changeToInput(element) {
   const prevText = $(element).text();
   $(this).html(`<input type="text" class = "edit-input" placeholder = ${prevText}`);
+  submitEdits()
 }
 
 function submitEdits() {
