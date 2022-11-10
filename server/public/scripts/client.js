@@ -87,8 +87,9 @@ function readyKoala() {
 
 function deleteKoala() {
     // sweetalert2 confirmation notification 
+    let name = $(this).data('name');
     Swal.fire({
-        title: 'Are you sure you want to delete this koala?',
+        title: `Are you sure you want to delete ${name}?`,
         showCancelButton: true,
         confirmButtonText: 'Delete',
     }).then((result) => {
@@ -107,7 +108,7 @@ function deleteKoala() {
                 console.log('could not delete', err);
             });
             // notify the user that the koala was successfully deleted
-            Swal.fire('The koala was deleted.', '', 'success');
+            Swal.fire(`${name} was deleted.`, '', 'success');
         } else if (result.isDenied) {
             console.log('delete canceled');
             // exit the notification if cancel is selected.
@@ -131,7 +132,7 @@ function renderDisplay(array) {
                 <td class='koala-attribute' data-id='${koala.id}'>${koala.ready_to_transfer}</td>
                 <td class='koala-attribute' data-id='${koala.id}'>${koala.notes}</td>
                 <td><button class= "edit-btn" data-id='${koala.id}'>edit</button></td>
-                <td><button class= "delete-btn" data-id='${koala.id}'>x</button></td>
+                <td><button class= "delete-btn" data-name='${koala.name}' data-id='${koala.id}'>x</button></td>
                 <td><button class= "ready-btn" data-id='${koala.id}'>${koala.ready_to_transfer ? 'mark unready' : 'mark ready'}</button></td>
             </tr>
         `);
