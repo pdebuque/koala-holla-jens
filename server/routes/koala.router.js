@@ -69,7 +69,27 @@ router.put('/:id', (req, res) => {
 })
 
 // edit information for existing koalas
-// (work in progress)
+router.put('/edit/:id', (req, res) => {
+    console.log('editing koala')
+    const newData = req.body;
+    const queryText = `UPDATE koalas_list
+                        SET 
+                        name = $1,
+                        gender = $2,
+                        age = $3,
+                        ready_to_transfer = $4,
+                        notes = $5
+                        WHERE id = $6
+                        `
+    pool.query(queryText, [newData.name, newData.gender, newData.age, newData.ready_to_transfer, newData.notes, newData.id])
+        .then(() => {
+            console.log('edit successful');
+            res.sendStatus(202);
+        }).catch((err) => {
+            console.log('could not edit data', err);
+            res.sendStatus(500);
+        })
+})
 
 // DELETE
 router.delete('/:id', (req, res) => {
