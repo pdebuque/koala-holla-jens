@@ -22,7 +22,6 @@ router.get('/', (req, res) => {
 })
 
 // filter get
-
 router.get('/:searchTerm', (req, res) => {
     console.log('in filter')
     const queryText = `SELECT * FROM koalas_list WHERE name ILIKE $1 OR notes ILIKE $1`
