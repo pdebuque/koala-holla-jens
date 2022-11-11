@@ -38,34 +38,39 @@ function getKoalas() {
 
 function addKoala() {
   console.log('in addKoala');
+  if ($('#nameIn').val() === '' || isNaN($('#ageIn').val()) || ($('#genderIn').val() !== 'M' && $('#genderIn').val() !== 'F') || ($('#readyForTransferIn').val() !== 'true' && $('#readyForTransferIn').val() !== 'false')){
+    // alert the user that the form wasn't filled out correctly
+    Swal.fire('Please fill out all forms correctly.');
+  } else {
+    // create new koala objct
+    const newKoala = {
+      name: $('#nameIn').val(),
+      age: $('#ageIn').val(),
+      gender: $('#genderIn').val(),
+      ready_to_transfer: $('#readyForTransferIn').val(),
+      notes: $('#notesIn').val()
+    }
 
-  // create new koala objct
-  const newKoala = {
-    name: $('#nameIn').val(),
-    age: $('#ageIn').val(),
-    gender: $('#genderIn').val(),
-    ready_to_transfer: $('#readyForTransferIn').val(),
-    notes: $('#notesIn').val()
+    // empty inputs
+    $('#nameIn').val('');
+    $('#ageIn').val('');
+    $('#genderIn').val('');
+    $('#readyForTransferIn').val('');
+    $('#notesIn').val('');
+
+    // ajax call to server to post koalas
+    $.ajax({
+      type: 'POST',
+      url: '/koalas',
+      data: newKoala
+    }).then((res) => {
+      console.log('new koala added!');
+      getKoalas();
+    }).catch((err) => {
+      console.log('could not add: ', err);
+    });
+
   }
-
-  // empty inputs
-  $('#nameIn').val('');
-  $('#ageIn').val('');
-  $('#genderIn').val('');
-  $('#readyForTransferIn').val('');
-  $('#notesIn').val('');
-
-  // ajax call to server to post koalas
-  $.ajax({
-    type: 'POST',
-    url: '/koalas',
-    data: newKoala
-  }).then((res) => {
-    console.log('new koala added!');
-    getKoalas();
-  }).catch((err) => {
-    console.log('could not add: ', err);
-  });
 }
 
 function readyKoala() {
