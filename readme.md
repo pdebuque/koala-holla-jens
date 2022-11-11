@@ -1,54 +1,57 @@
-This must stop:
----------------
-![Nevar again](https://i.makeagif.com/media/8-22-2014/GO_DT4.gif)
+# Koala Holla
+
+## Contributors
+
+* Paolo Debuque
+
+* Paul Norling
+
+* Tracey Treat
 
 
-Koala Holla
-===========
+## Description
 
-Our client, Koala Holla (1976 Llama Comma Drive, Walla Walla WA) is a non-profit dedicated to the ethical transitioning of koalas from the outdoors (whereupon they may be rained) to urban areas where roofs exist. Your team has been hired to build a web app to handle their terrarium residents.
+Koala Holla is a web app for managing a terrarium of koalas. Using the input form and buttons on the table, you can add and delete koalas from the database.
 
-Technologies
-------------
-* JQuery
-* Node
-* Express
-* SQL
+## Prerequisites
 
-Client needs
-------------
-Koala Holla has provided a table of their current inventory:
+You need:
+- [node.js](https://nodejs.org/en/download/)
 
-| id | name    | gender | age | ready_to_transer | notes                            |
-|----|---------|--------|-----|------------------|----------------------------------|
-| 1  | Scotty  | M      | 4   | Y                | Born in Guatemala                |
-| 2  | Jean    | F      | 5   | Y                | Allergic to lots of lava         |
-| 3  | Ororo   | F      | 7   | N                | Loves listening to Paula (Abdul) |
-| 4  | Logan   | M      | 15  | N                | Loves the sauna                  |
-| 5  | Charlie | M      | 9   | Y                | Favorite band is Nirvana         |
-| 6  | Betsy   | F      | 4   | Y                | Has a pet iguana                 |
+## Installation
 
-They need the ability to add a Koala to the database. Make a form with the appropriate info. Save the koala in the database. Think about what data types you'll be needing for your table columns.  
+1. Clone the repo
+2. Open the terminal and navigate to the cloned repo
+3. Run `npm install`
 
-They need the ability for mark a Koala ready for transfer. Each koala in your UI needs a button in that reads 'Ready for Transfer'. When the user clicks on the button, it should update the database for the specific Koala. The 'Ready for Transfer' button should only appear for Koalas that haven't yet been marked ready for transfer.
-
-Delivery
---------
-Upon completion of the project you'll need to provide not only the source (via GitHub url), but also instructions on how the database table should be set up. This can be in a simple `database.sql` file in the repo.
-
-### STRETCH GOALS
-
-1. Ability to delete a specific Koala from the database.  
-2. Confirmation dialog before deleting (research SweetAlert).
-3. Ability to make koalas toggle between ready for transfer and NOT ready for transfer.
-4. Add form validation, additional styling and a README.md.
-5. Client side filtering with a text box
-6. Ability to edit other information (Name, Age, Notes) for existing Koalas in the db.
+## Usage
 
 
+1. In the terminal, navigate to the cloned repo
+2. Run `npm start` to start the server
+3. Visit localhost:5000 in your local browser
+4. To add a koala:
+    
+    a. Fill out all fields (Name, Age (Number), Gender (M or F), Ready for Transfer (true or false), Notes) correctly.
+    
+    b. Click the 'Add Koala' button
 
-### Sample Wireframe
---------
-Your final product may look something like this:
+5. To mark a koala as ready for transfer, click the 'Ready for Transfer' button
 
-![sample](sample.png)
+6. To edit a koala, click the edit button.
+
+    - A dialog will prompt you for values. Input the values you wish to change.
+
+7. To delete a koala, click the 'Delete' button
+
+    - An alert dialog will ask you to confirm before deleting.
+    Select 'Delete' to confirm.
+
+## Acknowledgment
+
+
+Thanks to Prime Academy for making this possible, and thanks to Shawl!
+
+
+
+

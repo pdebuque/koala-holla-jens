@@ -37,7 +37,7 @@ function getKoalas() {
 }
 
 function addKoala() {
-  console.log('in addKoala');
+  //console.log('in addKoala');
   if ($('#nameIn').val() === '' || isNaN($('#ageIn').val()) || ($('#genderIn').val() !== 'M' && $('#genderIn').val() !== 'F') || ($('#readyForTransferIn').val() !== 'true' && $('#readyForTransferIn').val() !== 'false')){
     // alert the user that the form wasn't filled out correctly
     Swal.fire('Please fill out all forms correctly.');
@@ -159,13 +159,6 @@ function renderDisplay(array) {
 }
 
 
-
-
-// this is non-functional and unfinished
-// edit Koala should select all corresponding attribute boxes and toggle click listeners
-// change to input changes the box into an input
-// submit edit sends data to server in PUT
-
 function editKoala() {
   const thisKoala = $(this).data();
   Swal.fire({
@@ -196,10 +189,6 @@ function editKoala() {
   }).then((result) => {
     console.log(result)
     putEdits(result.value)
-    // Swal.fire(`
-    //   Login: ${result.value.login}
-    //   Password: ${result.value.password}
-    // `.trim())
   })
 }
 
@@ -214,24 +203,3 @@ function putEdits(object) {
     console.log('could not edit ', err)
   })
 }
-
-
-//   // use THIS to get id
-//   const id = $(this).data('id')
-//   // change text of edit button to submit
-//   $(this).html('submit changes')
-//   // toggle click listeners on button
-//   const rowBoxes = $(this).parent().parent().find('.koala-attribute');
-//   console.log(rowBoxes);
-//   rowBoxes;
-// }
-
-// function changeToInput(element) {
-//   const prevText = $(element).text();
-//   $(this).html(`<input type="text" class = "edit-input" placeholder = ${prevText}`);
-//   submitEdits()
-// }
-
-// function submitEdits() {
-//   // PUT request
-// }
