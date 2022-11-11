@@ -18,6 +18,7 @@ function setupClickListeners() {
   $('#viewKoalas').on('click', '.delete-btn', deleteKoala);
   $('#viewKoalas').on('click', '.ready-btn', readyKoala);
   $('#viewKoalas').on('click', '.edit-btn', editKoala);
+  $('#live-search').on('keyup', filterResults)
 }
 
 function getKoalas() {

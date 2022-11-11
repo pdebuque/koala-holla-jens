@@ -18,21 +18,26 @@ js
 ## stretch goals
 
 1. delete koalas from the database
-    [] html infrastructure: include delete button in render
-    [] client-side delete request using data-id as a param
-    [] server-side delete handling 
+    [x] html infrastructure: include delete button in render
+    [x] client-side delete request using data-id as a param
+    [x] server-side delete handling 
 
 2. confirmation dialog before deleting
+    [x] all done
 
 3. toggle koalas between ready and not ready
-    [] html infrastructure: buttons in render
-    [] client-side: put request
-    [] server-side put handling
+    [x] html infrastructure: buttons in render
+    [x] client-side: put request
+    [x] server-side put handling
 
 4. form validation, stylings, and README.md
+    [] form validation
+        [] regex
+    [x] stylings
+    [x] readme
 
 5. client-side filtering with a text box
-    [] add input to html
-    [] client-side: .on('keyup',filterResults)
+    [x] add input to html
+    [x] client-side: .on('keyup',filterResults)
 
 6. Edit information for existing koalas
